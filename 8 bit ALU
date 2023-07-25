@@ -1,0 +1,62 @@
+module EightBitALU(
+    input [7:0] A,
+    input [7:0] B,
+    input [2:0] opcode, // 3-bit opcode to select the operation
+    output reg [7:0] result,
+    output reg z, // Zero flag
+    output reg n, // Negative flag
+    output reg c  // Carry flag (used for shift operations)
+);
+
+    // Adder module
+    reg [7:0] add_result;
+    reg add_cout;
+
+    // Subtractor module
+    reg [7:0] sub_result;
+    reg sub_bout;
+
+    // Multiplier module
+    reg [15:0] mult_result;
+
+    // Perform addition
+    always @(*)
+    begin
+        add_result = A + B;
+        add_cout = (add_result[8]) ? 1'b1 : 1'b0;
+    end
+
+    // Perform subtraction
+    always @(*)
+    begin
+        sub_result = A - B;
+        sub_bout = (sub_result[8]) ? 1'b0 : 1'b1;
+    end
+
+    // Perform multiplication
+    always @(*)
+    begin
+        mult_result = A * B;
+    end
+
+    // ALU operation selection
+    always @(A, B, opcode)
+    begin
+        case (opcode)
+            3'b000: result = add_result;      // Addition
+            3'b001: result = sub_result;      // Subtraction
+            3'b010: result = A & B;           // Bitwise AND
+            3'b011: result = A | B;           // Bitwise OR
+            3'b100: result = A ^ B;           // Bitwise XOR
+            3'b101: result = ~A;              // Bitwise NOT
+            3'b110: result = A << 1;          // Left shift
+            3'b111: result = A >> 1;          // Right shift (logical, fills with 0)
+            default: result = 8'b0;           // Default: output zero
+        endcase
+
+        z = (result == 8'b0) ? 1'b1 : 1'b0;  // Zero flag
+        n = (result[7] == 1'b1) ? 1'b1 : 1'b0; // Negative flag
+        c = add_cout | sub_bout;             // Carry flag (used for shift operations)
+    end
+
+endmodule
