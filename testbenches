@@ -1,0 +1,56 @@
+module tb_EightBitALU;
+
+    reg [7:0] A, B;
+    reg [2:0] opcode;
+    wire [7:0] result;
+    wire z, n, c;
+
+    EightBitALU dut(.A(A), .B(B), .opcode(opcode), .result(result), .z(z), .n(n), .c(c));
+
+    initial begin
+        $display("Testing 8-bit ALU");
+
+        // Test case 1: Addition
+        A = 8'b01100100; B = 8'b10101010; opcode = 3'b000;
+        #5;
+        $display("Test case 1 - Addition: A = %b, B = %b, Result = %b, Z = %b, N = %b, C = %b", A, B, result, z, n, c);
+
+        // Test case 2: Subtraction
+        A = 8'b01100100; B = 8'b10101010; opcode = 3'b001;
+        #5;
+        $display("Test case 2 - Subtraction: A = %b, B = %b, Result = %b, Z = %b, N = %b, C = %b", A, B, result, z, n, c);
+
+        // Test case 3: Bitwise AND
+        A = 8'b01100100; B = 8'b10101010; opcode = 3'b010;
+        #5;
+        $display("Test case 3 - Bitwise AND: A = %b, B = %b, Result = %b, Z = %b, N = %b, C = %b", A, B, result, z, n, c);
+
+        // Test case 4: Bitwise OR
+        A = 8'b01100100; B = 8'b10101010; opcode = 3'b011;
+        #5;
+        $display("Test case 4 - Bitwise OR: A = %b, B = %b, Result = %b, Z = %b, N = %b, C = %b", A, B, result, z, n, c);
+
+        // Test case 5: Bitwise XOR
+        A = 8'b01100100; B = 8'b10101010; opcode = 3'b100;
+        #5;
+        $display("Test case 5 - Bitwise XOR: A = %b, B = %b, Result = %b, Z = %b, N = %b, C = %b", A, B, result, z, n, c);
+
+        // Test case 6: Bitwise NOT
+        A = 8'b01100100; opcode = 3'b101;
+        #5;
+        $display("Test case 6 - Bitwise NOT: A = %b, Result = %b, Z = %b, N = %b, C = %b", A, result, z, n, c);
+
+        // Test case 7: Left Shift
+        A = 8'b01100100; opcode = 3'b110;
+        #5;
+        $display("Test case 7 - Left Shift: A = %b, Result = %b, Z = %b, N = %b, C = %b", A, result, z, n, c);
+
+        // Test case 8: Right Shift
+        A = 8'b01100100; opcode = 3'b111;
+        #5;
+        $display("Test case 8 - Right Shift: A = %b, Result = %b, Z = %b, N = %b, C = %b", A, result, z, n, c);
+
+        $finish;
+    end
+
+endmodule
