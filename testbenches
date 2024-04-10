@@ -1,24 +1,143 @@
 `timescale 1ns / 1ps
 
+module alu_tb;
 
-module Alu_tb;
-reg [7:0] a,b;
-reg [3:0] ALU_sel;
-wire [7:0] ALU_out;
-wire CarryOut;
-integer i;
-Alu test_unit(a,b,ALU_sel,ALU_out,CarryOut);
-initial begin
-//$dummpfile("dump.vcd");
-//$dumpvars(1,Alu_tb);
-a = 8'h05;
-b = 8'h04;
-ALU_sel = 4'h0;
-for(i=0;i<4;i=i+1)
-begin
-ALU_sel = ALU_sel +8'h01;
-#10;
-end
-end
+    // Inputs
+    reg [7:0] a, b;
+    reg [3:0] opcode;
+
+    // Outputs
+    wire [7:0] op;
+
+    // Instantiate the ALU module
+    alu uut (
+        .op(op),
+        .a(a),
+        .b(b),
+        .opcode(opcode)
+    );
+
+    // Clock
+    reg clk = 0;
+    always #5 clk = ~clk;
+
+    // Test vectors
+    initial begin
+        // Test vector 1: Addition operation
+        a = 8'h0A;
+        b = 8'h05;
+        opcode = 4'b0000;
+        #10;
+        $display("Result of Addition: %d", op);
+
+        // Test vector 2: Subtraction operation
+        a = 8'h0A;
+        b = 8'h05;
+        opcode = 4'b0001;
+        #10;
+        $display("Result of Subtraction: %d", op);
+
+        // Test vector 3: Multiplication operation
+        a = 8'h0A;
+        b = 8'h05;
+        opcode = 4'b0010;
+        #10;
+        $display("Result of Multiplication: %d", op);
+
+        // Test vector 4: Division operation
+        a = 8'h0A;
+        b = 8'h02;
+        opcode = 4'b0011;
+        #10;
+        $display("Result of Division: %d", op);
+
+        // Test vector 5: Modulo Division operation
+        a = 8'h0A;
+        b = 8'h03;
+        opcode = 4'b0100;
+        #10;
+        $display("Result of Modulo Division: %d", op);
+
+        // Test vector 6: Bit-wise AND operation
+        a = 8'h0F;
+        b = 8'h0A;
+        opcode = 4'b0101;
+        #10;
+        $display("Result of Bit-wise AND: %d", op);
+
+        // Test vector 7: Bit-wise OR operation
+        a = 8'h0F;
+        b = 8'h0A;
+        opcode = 4'b0110;
+        #10;
+        $display("Result of Bit-wise OR: %d", op);
+
+        // Test vector 8: Logical AND operation
+        a = 8'h01;
+        b = 8'h02;
+        opcode = 4'b0111;
+        #10;
+        $display("Result of Logical AND: %d", op);
+
+        // Test vector 9: Logical OR operation
+        a = 8'h01;
+        b = 8'h02;
+        opcode = 4'b1000;
+        #10;
+        $display("Result of Logical OR: %d", op);
+
+        // Test vector 10: Bit-wise XOR operation
+        a = 8'h0F;
+        b = 8'h0A;
+        opcode = 4'b1001;
+        #10;
+        $display("Result of Bit-wise XOR: %d", op);
+
+        // Test vector 11: Bit-wise Invert operation
+        a = 8'h0A;
+        b = 8'h00;
+        opcode = 4'b1010;
+        #10;
+        $display("Result of Bit-wise Invert: %d", op);
+
+        // Test vector 12: Logical Invert operation
+        a = 8'h00;
+        b = 8'h00;
+        opcode = 4'b1011;
+        #10;
+        $display("Result of Logical Invert: %d", op);
+
+        // Test vector 13: Right Shift operation
+        a = 8'h0A;
+        b = 8'h00;
+        opcode = 4'b1100;
+        #10;
+        $display("Result of Right Shift: %d", op);
+
+        // Test vector 14: Left Shift operation
+        a = 8'h0A;
+        b = 8'h00;
+        opcode = 4'b1101;
+        #10;
+        $display("Result of Left Shift: %d", op);
+
+        // Test vector 15: Increment operation
+        a = 8'h0A;
+        b = 8'h00;
+        opcode = 4'b1110;
+        #10;
+        $display("Result of Increment: %d", op);
+
+        // Test vector 16: Decrement operation
+        a = 8'h0A;
+        b = 8'h00;
+        opcode = 4'b1111;
+        #10;
+        $display("Result of Decrement: %d", op);
+
+        // End simulation
+        $finish;
+    end
 
 endmodule
+
