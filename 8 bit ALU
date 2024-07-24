@@ -1,8 +1,8 @@
 module alu (op,a,b,opcode);
 
-  output reg [7:0] op;     //output of alu
-   input [7:0]     a,b;    //inputs to alu
-   input [3:0] opcode;     //control signal for different operation
+  output reg [7:0] op;           //output of alu
+   input [7:0]     a,b;         //inputs to alu
+   input [3:0] opcode;         //control signal for different operation
 
 always @(*)
 begin
