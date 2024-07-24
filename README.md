@@ -1,3 +1,4 @@
+# Arithmetic Logic Unit
 ALU (Arithmetic Logic Unit) Design
 The Arithmetic Logic Unit (ALU) is a fundamental component of the CPU (Central Processing Unit) that performs arithmetic and logic operations. The design of the ALU in this project encompasses:
 
